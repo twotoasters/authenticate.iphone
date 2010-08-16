@@ -325,8 +325,12 @@ static JRAuthenticate* singletonJRAuth = nil;
 	theToken = [token retain];
 	for (id<JRAuthenticateDelegate> delegate in delegates) 
 	{
-		[delegate jrAuthenticate:self didReceiveToken:token];
-		[delegate jrAuthenticate:self didReceiveToken:token forProvider:provider];
+		if ([delegate respondsToSelector:@selector(jrAuthenticate:didReceiveToken:)]) {
+			[delegate jrAuthenticate:self didReceiveToken:token];
+		}
+		if ([delegate respondsToSelector:@selector(jrAuthenticate:didReceiveToken:forProvider:)]) {
+			[delegate jrAuthenticate:self didReceiveToken:token forProvider:provider];
+		}
 	}
 	
 	[jrModalNavController dismissModalNavigationController:YES];
