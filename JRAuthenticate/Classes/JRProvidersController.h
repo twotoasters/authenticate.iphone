@@ -51,8 +51,9 @@
 	/* Activity Spinner and Label displayed while the list of configured providers is empty */
 	UILabel					*myLoadingLabel;
 	UIActivityIndicatorView *myActivitySpinner; 
+	UIImageView				*myImageView;
 	
-	UILabel		*titleLabel;
+	UIImageView		*titleImageView;
 
 	JRInfoBar	*infoBar;
 }
@@ -60,4 +61,6 @@
 @property (nonatomic, retain) IBOutlet UITableView	*myTableView;
 @property (nonatomic, retain) IBOutlet UILabel		*myLoadingLabel;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myActivitySpinner;
+@property (nonatomic, retain) IBOutlet UIImageView *myImageView;
+
 @end

@@ -83,6 +83,7 @@
 @synthesize myTableView;
 @synthesize myLoadingLabel;
 @synthesize myActivitySpinner;
+@synthesize myImageView;
 
 /*
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -104,7 +105,9 @@
 	jrAuth = [[JRAuthenticate jrAuthenticate] retain];
 	sessionData = [[((JRModalNavigationController*)[[self navigationController] parentViewController]) sessionData] retain];	
 
-	titleLabel = nil;
+	titleImageView = nil;
+	
+	myTableView.backgroundColor = [UIColor clearColor];
 	
 	/* Check the session data to see if there's information on the last provider the user logged in with. */
 	if (sessionData.returningProvider)
@@ -117,8 +120,19 @@
 											   animated:NO]; 
 	}
 	
+	UILabel* headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 100, 20)];
+	headerLabel.font = [UIFont boldSystemFontOfSize:16];
+	headerLabel.textAlignment = UITextAlignmentCenter;
+	headerLabel.backgroundColor = [UIColor clearColor];
+	headerLabel.text = @"use your existing account!";
+	myTableView.tableHeaderView = headerLabel;
+	[headerLabel release];
+	
 	/* Load the table with the list of providers. */
 	[myTableView reloadData];
+	
+	/* Reposition the background image */
+	myImageView.frame = CGRectOffset([UIScreen mainScreen].bounds, 0, -64);
 }
 
 
@@ -129,28 +143,21 @@
 	
 	self.title = @"Providers";
 
-	if (!titleLabel)
+	if (!titleImageView)
 	{
-		titleLabel = [[[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 44)] autorelease];
-		titleLabel.backgroundColor = [UIColor clearColor];
-		titleLabel.font = [UIFont boldSystemFontOfSize:20.0];
-		titleLabel.shadowColor = [UIColor colorWithWhite:0.0 alpha:0.5];
-		titleLabel.textAlignment = UITextAlignmentCenter;
-		titleLabel.textColor = [UIColor whiteColor];
-
-		self.navigationItem.titleView = titleLabel;
-	}	
-	titleLabel.text = NSLocalizedString(@"Sign in with...", @"");
+		titleImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"sign-in.png"]] autorelease];
+		self.navigationItem.titleView = titleImageView;
+	}
 	
 	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] 
 									 initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
 									  target:[self navigationController].parentViewController
 									 action:@selector(cancelButtonPressed:)] autorelease];
 
-	self.navigationItem.rightBarButtonItem = cancelButton;
-	self.navigationItem.rightBarButtonItem.enabled = YES;
+	self.navigationItem.leftBarButtonItem = cancelButton;
+	self.navigationItem.leftBarButtonItem.enabled = YES;
 	
-	self.navigationItem.rightBarButtonItem.style = UIBarButtonItemStyleBordered;
+	self.navigationItem.leftBarButtonItem.style = UIBarButtonItemStyleBordered;
 	
 	UIBarButtonItem *placeholderItem = [[[UIBarButtonItem alloc] 
 										initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
@@ -158,7 +165,7 @@
 										action:nil] autorelease];
 
 	placeholderItem.width = 85;
-	self.navigationItem.leftBarButtonItem = placeholderItem;
+	self.navigationItem.rightBarButtonItem = placeholderItem;
 	
 	if (!infoBar)
 	{
