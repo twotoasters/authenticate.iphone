@@ -39,7 +39,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		9F590C0C11739175006955EF /* scratch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = scratch; sourceTree = "<group>"; };
 		9F590EF311752ED1006955EF /* bottom_bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bottom_bar.png; path = Resources/assets/button_graphics/bottom_bar.png; sourceTree = "<group>"; };
 		9F590EFC11752FC3006955EF /* JRInfoBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JRInfoBar.h; path = Classes/JRInfoBar.h; sourceTree = "<group>"; };
 		9F590EFD11752FC3006955EF /* JRInfoBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JRInfoBar.m; path = Classes/JRInfoBar.m; sourceTree = "<group>"; };
@@ -136,7 +135,6 @@
 		0867D691FE84028FC02AAC07 /* JRAuthenticate */ = {
 			isa = PBXGroup;
 			children = (
-				9F590C0C11739175006955EF /* scratch */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				9F720AAC116A7F8A00E69F8D /* Resources */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
