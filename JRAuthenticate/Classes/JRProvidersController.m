@@ -120,13 +120,19 @@
 											   animated:NO]; 
 	}
 	
-	UILabel* headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 100, 20)];
-	headerLabel.font = [UIFont boldSystemFontOfSize:16];
+	UIView* containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+	containerView.backgroundColor = [UIColor clearColor];
+	
+	UILabel* headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 300, 25)];
+	headerLabel.font = [UIFont boldSystemFontOfSize:15];
 	headerLabel.textAlignment = UITextAlignmentCenter;
 	headerLabel.backgroundColor = [UIColor clearColor];
 	headerLabel.text = @"use your existing account!";
-	myTableView.tableHeaderView = headerLabel;
+	
+	[containerView addSubview:headerLabel];
 	[headerLabel release];
+	myTableView.tableHeaderView = containerView;
+	[containerView release];
 	
 	/* Load the table with the list of providers. */
 	[myTableView reloadData];
@@ -324,6 +330,7 @@
 	NSString *imagePath = [NSString stringWithFormat:@"jrauth_%@_icon.png", provider];
 	
 	DLog(@"cell for %@", provider);
+	cell.textLabel.font = [UIFont boldSystemFontOfSize:15];
 
 #if __IPHONE_3_0
 	cell.textLabel.text = friendly_name;
