@@ -240,7 +240,7 @@
 	}
 	
 	/* Otherwise, keep polling until we've timed out. */
-	if (interval >= 8.0)
+	if (interval >= 15.0)
 	{	
 		DLog(@"No Available Providers");
 
