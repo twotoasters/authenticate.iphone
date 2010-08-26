@@ -302,7 +302,7 @@ UIViewController* TTOpenURL(NSString* URL);
 - (CGFloat)tableView:(UITableView *)_tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 1) {
-		return 80;
+		return 60;
 	}
 	return 50;
 }
@@ -328,10 +328,10 @@ UIViewController* TTOpenURL(NSString* URL);
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"privacyCell"];
 		if (cell == nil) {
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewStyleGrouped reuseIdentifier:@"privacyCell"] autorelease];
-			UIWebView* webView = [[[UIWebView alloc] initWithFrame:CGRectMake(3, 3, 300 - 6, 80 - 6)] autorelease];
+			UIWebView* webView = [[[UIWebView alloc] initWithFrame:CGRectMake(3, 3, 300 - 6, 60 - 6)] autorelease];
 			webView.delegate = self;
-			NSString* css = @"p {top:-2px;position:relative;color:#666666;font-family:sans-serif;} a {color:#ED139A;}";
-			NSString* html = [NSString stringWithFormat:@"<html><head><style>%@</style></head><body><p>by continuing you agree to your <a href='http://www.gotryiton.com/terms.php'>terms and conditions of use</a>, <a href='http://www.gotryiton.com/terms.php'>privacy policy</a>, <a href='http://www.gotryiton.com/terms.php'>legal terms</a>, and <a href='http://www.gotryiton.com/community-standards.php'>community standards</a>.</p></body></html>", css];
+			NSString* css = @"p {top:-2px;font-size:12px;position:relative;color:#666666;font-family:sans-serif;} a {color:#ED139A;}";
+			NSString* html = [NSString stringWithFormat:@"<html><head><style>%@</style></head><body><p>by continuing you agree to our <a href='http://www.gotryiton.com/terms.php'>terms and conditions of use</a>, <a href='http://www.gotryiton.com/terms.php'>privacy policy</a>, <a href='http://www.gotryiton.com/terms.php'>legal terms</a>, and <a href='http://www.gotryiton.com/community-standards.php'>community standards</a>.</p></body></html>", css];
 			[webView loadHTMLString:html baseURL:nil];
 			[cell.contentView addSubview:webView];
 		}
