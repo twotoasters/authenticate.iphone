@@ -46,6 +46,8 @@
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 
+UIViewController* TTOpenURL(NSString* URL);
+
 @interface UITableViewCellProviders : UITableViewCell 
 {
 	UIImageView *icon;
@@ -292,28 +294,50 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-	return 37;
+	if (section == 1)
+		return 37;
+	return 0;
 }
 
 - (CGFloat)tableView:(UITableView *)_tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if (indexPath.section == 1) {
+		return 80;
+	}
 	return 50;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView 
 {
-	return 1;
+	return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView 
  numberOfRowsInSection:(NSInteger)section 
 {
-	return [sessionData.configedProviders count];
+	if (section == 0) {
+		return [sessionData.configedProviders count];
+	}
+	return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView 
 		 cellForRowAtIndexPath:(NSIndexPath *)indexPath 
 {
+	if (indexPath.section == 1) {
+		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"privacyCell"];
+		if (cell == nil) {
+			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewStyleGrouped reuseIdentifier:@"privacyCell"] autorelease];
+			UIWebView* webView = [[[UIWebView alloc] initWithFrame:CGRectMake(3, 3, 300 - 6, 80 - 6)] autorelease];
+			webView.delegate = self;
+			NSString* css = @"p {top:-2px;position:relative;color:#666666;font-family:sans-serif;} a {color:#ED139A;}";
+			NSString* html = [NSString stringWithFormat:@"<html><head><style>%@</style></head><body><p>by continuing you agree to your <a href='http://www.gotryiton.com/terms.php'>terms and conditions of use</a>, <a href='http://www.gotryiton.com/terms.php'>privacy policy</a>, <a href='http://www.gotryiton.com/terms.php'>legal terms</a>, and <a href='http://www.gotryiton.com/community-standards.php'>community standards</a>.</p></body></html>", css];
+			[webView loadHTMLString:html baseURL:nil];
+			[cell.contentView addSubview:webView];
+		}
+		cell.selectionStyle = UITableViewCellSelectionStyleNone;
+		return cell;
+	}
 	UITableViewCellProviders *cell = 
 	(UITableViewCellProviders*)[tableView dequeueReusableCellWithIdentifier:@"cachedCell"];
 	
@@ -353,6 +377,9 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+	if (indexPath.section == 1) {
+		return;
+	}
 	[tableView deselectRowAtIndexPath:indexPath animated:NO];
 	
 	/* Let sessionData know which provider the user selected */
@@ -414,6 +441,19 @@
 	[infoBar release];
     
 	[super dealloc];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+	if ([[request.URL absoluteString] isEqualToString:@"about:blank"]) {
+		return YES;
+	}
+//	[[UIApplication sharedApplication] openURL:request.URL];
+//	[[UIApplication sharedApplication].delegate application:[UIApplication sharedApplication] handleOpenURL:request.URL];
+	Class navigator = NSClassFromString(@"TTNavigator");
+	UIViewController* viewController = [[navigator navigator] viewControllerForURL:[request.URL absoluteString]];
+	[viewController openRequest:request];
+	[self.navigationController pushViewController:viewController animated:YES];
+	return NO;
 }
 
 @end

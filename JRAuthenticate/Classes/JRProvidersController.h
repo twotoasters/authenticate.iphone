@@ -41,7 +41,8 @@
 @class JRSessionData;
 
 @interface JRProvidersController : UIViewController <UINavigationBarDelegate, UITableViewDelegate, 
-														UITableViewDataSource, UIAlertViewDelegate> 
+														UITableViewDataSource, UIAlertViewDelegate,
+															UIWebViewDelegate> 
 {
 	JRAuthenticate	*jrAuth;
 	JRSessionData	*sessionData;
