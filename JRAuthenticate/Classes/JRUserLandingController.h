@@ -62,4 +62,5 @@
 - (BOOL)textFieldShouldClear:(UITextField *)textField;
 
 @property (nonatomic, retain) IBOutlet UITableView *myTableView;
+@property (nonatomic, retain) IBOutlet UIImageView *myImageView;
 @end

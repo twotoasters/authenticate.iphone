@@ -51,6 +51,7 @@
 
 @implementation JRWebViewController
 @synthesize myWebView;
+@synthesize myImageView;
 
 /*
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -73,6 +74,9 @@
 	
 	jrAuth = [[JRAuthenticate jrAuthenticate] retain];
 	sessionData = [[((JRModalNavigationController*)[[self navigationController] parentViewController]) sessionData] retain];
+	
+	/* Reposition the background image */
+	myImageView.frame = CGRectOffset([UIScreen mainScreen].bounds, 0, -64);
 }
 
 - (void)viewWillAppear:(BOOL)animated 
