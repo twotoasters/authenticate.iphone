@@ -87,7 +87,8 @@
 	self.title = [NSString stringWithFormat:@"%@", sessionData.currentProvider.friendlyName];
 	
 	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] 
-									  initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+									  initWithTitle:@"cancel"
+									  style:UIBarButtonItemStyleBordered
 									  target:[self navigationController].parentViewController
 									  action:@selector(cancelButtonPressed:)] autorelease];
 	
