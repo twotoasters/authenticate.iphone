@@ -56,4 +56,5 @@
 }
 
 @property (nonatomic, retain) IBOutlet UIWebView *myWebView;
+@property (nonatomic, retain) IBOutlet UIImageView *myImageView;
 @end

@@ -153,8 +153,15 @@ UIViewController* TTOpenURL(NSString* URL);
 		self.navigationItem.titleView = titleImageView;
 	}
 	
+	self.navigationItem.backBarButtonItem = [[[UIBarButtonItem alloc] 
+											  initWithTitle:@"back"
+											  style:UIBarButtonItemStyleBordered
+											  target:nil
+											  action:nil] autorelease];
+	
 	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] 
-									 initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+									 initWithTitle:@"cancel"
+									  style:UIBarButtonItemStyleBordered
 									  target:[self navigationController].parentViewController
 									 action:@selector(cancelButtonPressed:)] autorelease];
 

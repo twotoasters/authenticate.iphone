@@ -225,6 +225,7 @@
 
 @implementation JRUserLandingController
 @synthesize myTableView;
+@synthesize myImageView;
 
 /*
 - (id)initWithStyle:(UITableViewStyle)style {
@@ -246,6 +247,9 @@
 	sessionData = [[((JRModalNavigationController*)[[self navigationController] parentViewController]) sessionData] retain];
 	
 	label = nil;
+	
+	/* Reposition the background image */
+	myImageView.frame = CGRectOffset([UIScreen mainScreen].bounds, 0, -64);
 }
 
 - (NSString*)customTitle
@@ -284,7 +288,8 @@
 	[infoBar fadeIn];	
 	
 	UIBarButtonItem *cancelButton = [[[UIBarButtonItem alloc] 
-									  initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+									  initWithTitle:@"cancel"
+									  style:UIBarButtonItemStyleBordered
 									  target:[self navigationController].parentViewController
 									  action:@selector(cancelButtonPressed:)] autorelease];
 	
