@@ -48,6 +48,7 @@
 	JRSessionData	*sessionData;
 
 	UITableView		*myTableView;
+	UIView* tableHeaderView;
 	
 	/* Activity Spinner and Label displayed while the list of configured providers is empty */
 	UILabel					*myLoadingLabel;
@@ -63,5 +64,6 @@
 @property (nonatomic, retain) IBOutlet UILabel		*myLoadingLabel;
 @property (nonatomic, retain) IBOutlet UIActivityIndicatorView *myActivitySpinner;
 @property (nonatomic, retain) IBOutlet UIImageView *myImageView;
+@property (nonatomic, retain) IBOutlet UIView* tableHeaderView;
 
 @end

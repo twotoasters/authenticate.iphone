@@ -86,6 +86,7 @@ UIViewController* TTOpenURL(NSString* URL);
 @synthesize myLoadingLabel;
 @synthesize myActivitySpinner;
 @synthesize myImageView;
+@synthesize tableHeaderView;
 
 /*
 // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.
@@ -125,22 +126,17 @@ UIViewController* TTOpenURL(NSString* URL);
 	UIView* containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
 	containerView.backgroundColor = [UIColor clearColor];
 	
-	UILabel* headerLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 300, 25)];
-	headerLabel.font = [UIFont boldSystemFontOfSize:15];
-	headerLabel.textAlignment = UITextAlignmentCenter;
-	headerLabel.backgroundColor = [UIColor clearColor];
-	headerLabel.text = @"use your existing account!";
 	
-	[containerView addSubview:headerLabel];
-	[headerLabel release];
-	myTableView.tableHeaderView = containerView;
-	[containerView release];
+	
+	myTableView.tableHeaderView = tableHeaderView;
 	
 	/* Load the table with the list of providers. */
 	[myTableView reloadData];
 	
 	/* Reposition the background image */
 	myImageView.frame = CGRectOffset([UIScreen mainScreen].bounds, 0, -64);
+	
+	myTableView.sectionFooterHeight = 0;
 }
 
 
@@ -302,7 +298,7 @@ UIViewController* TTOpenURL(NSString* URL);
 - (CGFloat)tableView:(UITableView *)_tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
 	if (indexPath.section == 1) {
-		return 60;
+		return 65;
 	}
 	return 50;
 }
@@ -328,11 +324,12 @@ UIViewController* TTOpenURL(NSString* URL);
 		UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:@"privacyCell"];
 		if (cell == nil) {
 			cell = [[[UITableViewCell alloc] initWithStyle:UITableViewStyleGrouped reuseIdentifier:@"privacyCell"] autorelease];
-			UIWebView* webView = [[[UIWebView alloc] initWithFrame:CGRectMake(3, 3, 300 - 6, 60 - 6)] autorelease];
+			UIWebView* webView = [[[UIWebView alloc] initWithFrame:CGRectMake(3, 2, 300 - 6, 60-6)] autorelease];
 			webView.delegate = self;
 			NSString* css = @"p {top:-2px;font-size:12px;position:relative;color:#666666;font-family:sans-serif;} a {color:#ED139A;}";
 			NSString* html = [NSString stringWithFormat:@"<html><head><style>%@</style></head><body><p>by continuing you agree to our <a href='http://www.gotryiton.com/terms.php'>terms and conditions of use</a>, <a href='http://www.gotryiton.com/terms.php'>privacy policy</a>, <a href='http://www.gotryiton.com/terms.php'>legal terms</a>, and <a href='http://www.gotryiton.com/community-standards.php'>community standards</a>.</p></body></html>", css];
 			[webView loadHTMLString:html baseURL:nil];
+//			[[[webView subviews] lastObject] setScrollEnabled:NO];
 			[cell.contentView addSubview:webView];
 		}
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -439,6 +436,7 @@ UIViewController* TTOpenURL(NSString* URL);
 	[myLoadingLabel release];
 	[myActivitySpinner release];
 	[infoBar release];
+	[tableHeaderView release];
     
 	[super dealloc];
 }
