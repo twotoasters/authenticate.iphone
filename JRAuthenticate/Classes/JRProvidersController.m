@@ -455,8 +455,9 @@ UIViewController* TTOpenURL(NSString* URL);
 //	[[UIApplication sharedApplication] openURL:request.URL];
 //	[[UIApplication sharedApplication].delegate application:[UIApplication sharedApplication] handleOpenURL:request.URL];
 	Class navigator = NSClassFromString(@"TTNavigator");
-	UIViewController* viewController = [[navigator navigator] viewControllerForURL:[request.URL absoluteString]];
-	[viewController openRequest:request];
+	id navigatorInstance = [navigator performSelector:@selector(navigator)];
+	UIViewController* viewController = [navigatorInstance performSelector:@selector(viewControllerForURL:) withObject:[request.URL absoluteString]];
+	[viewController performSelector:@selector(openRequest:) withObject:request];
 	[self.navigationController pushViewController:viewController animated:YES];
 	return NO;
 }
