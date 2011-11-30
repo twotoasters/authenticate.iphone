@@ -35,6 +35,7 @@
 
 #import "JRProvidersController.h"
 #import "JREngage+CustomInterface.h"
+#import "GTIOSignInTermsView.h"
 
 #ifdef DEBUG
 #define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
@@ -67,6 +68,12 @@
 
 @implementation JRProvidersController
 @synthesize hidesCancelButton;
+
+- (void)setContentSizeForViewInPopover:(CGSize)size {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 3.2) {
+        [super setContentSizeForViewInPopover:size];
+    }
+}
     
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil andCustomInterface:(NSDictionary*)_customInterface
 {
@@ -165,10 +172,14 @@
     if (!infoBar)
 	{
         infoBar = [[JRInfoBar alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height - 30, self.view.frame.size.width, 30) 
-                                          andStyle:[sessionData hidePoweredBy]];
+                                          andStyle:JRInfoBarStyleShowPoweredBy];
         
 		[self.view addSubview:infoBar];
 	}
+    
+    UIView* terms = [GTIOSignInTermsView termsView];
+    terms.frame = CGRectMake(20, self.view.height - (100 + infoBar.bounds.size.height), 280, 100);
+    [self.view addSubview:terms];
 }
 
 - (void)viewWillAppear:(BOOL)animated 

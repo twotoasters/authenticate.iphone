@@ -48,6 +48,12 @@
 
 @implementation JRWebViewController
 
+- (void)setContentSizeForViewInPopover:(CGSize)size {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 3.2) {
+        [super setContentSizeForViewInPopover:size];
+    }
+}
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil andCustomInterface:(NSDictionary*)_customInterface
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) 
